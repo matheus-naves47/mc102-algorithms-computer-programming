@@ -1,7 +1,10 @@
 #!/usr/bin/bash
 
-read -p 'Digite o número da atividade: ' atv
+read -rp 'Digite o número da atividade: ' atv
 
+## Python
+
+printf "\nPython:\n"
 time for i in {01..10}
     do
 
@@ -18,3 +21,25 @@ time for i in {01..10}
             "$(colordiff output.txt Lab"$atv"/open/arq"$i".out)"
         fi
     done
+    
+# Fortran
+
+printf "\n\nFortran:\n"
+
+time for i in {01..10}
+    do
+    ./Lab"$atv"/lab"$atv" <Lab"$atv"/open/arq"$i".in> output.txt
+    diff -wb output.txt Lab"$atv"/open/arq"$i".out
+    DIFF=$(diff -wb output.txt Lab"$atv"/open/arq"$i".out) 
+        if [ "$DIFF" == "" ] 
+        then
+            echo "Teste $i: resultado correto"
+        else
+            echo "  "
+            echo "Teste $i: resultado incorreto"
+            echo "  "
+            "$(colordiff -wb output.txt Lab"$atv"/open/arq"$i".out)"
+        fi
+    done
+
+
